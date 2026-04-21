@@ -1,0 +1,32 @@
+{{- $title := cond .IsHome site.Title (printf "%s | %s" .Title site.Title) -}}
+{{- $description := .Description | default .Summary | default site.Params.description -}}
+{{- $cover := "" -}}
+{{- $defaultArticleCover := "/images/posts/carbon-grid-light-shared-cover.png" | absURL -}}
+{{- if .Params.cover.image -}}
+  {{- $cover = .Params.cover.image | absURL -}}
+{{- else if .IsPage -}}
+  {{- $cover = $defaultArticleCover -}}
+{{- else if site.Params.images -}}
+  {{- $cover = (index site.Params.images 0) | absURL -}}
+{{- end -}}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $description | plainify }}">
+<meta name="author" content="{{ site.Params.author }}">
+<link rel="canonical" href="{{ if .Params.canonicalURL }}{{ .Params.canonicalURL }}{{ else }}{{ .Permalink }}{{ end }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description | plainify }}">
+<meta property="og:url" content="{{ .Permalink }}">
+{{ with $cover }}<meta property="og:image" content="{{ . }}">{{ end }}
+<meta name="twitter:card" content="summary_large_image">
+{{ with $cover }}<meta name="twitter:image" content="{{ . }}">{{ end }}
+<meta name="theme-color" content="#f5f7fb">
+<link rel="icon" type="image/svg+xml" href="{{ "/images/icons/squares-accent-thick.svg" | absURL }}">
+{{- with resources.Get "css/carbon-site.css" | resources.Minify | fingerprint }}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+{{- end }}
+{{ range .AlternativeOutputFormats -}}
+<link rel="{{ .Rel }}" type="{{ .MediaType.Type | html }}" href="{{ .Permalink | safeURL }}" title="{{ .Name }}">
+{{ end -}}

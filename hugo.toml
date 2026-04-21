@@ -1,0 +1,34 @@
+baseURL = "https://nikita-kibitkin.github.io/"
+title = "Nikita Kibitkin | Engineering Blog"
+languageCode = "en-us"
+defaultContentLanguage = "en"
+enableRobotsTXT = true
+
+[pagination]
+pagerSize = 20
+
+[taxonomies]
+tag = "tags"
+
+[permalinks]
+posts = "/posts/:slugorcontentbasename/"
+
+[outputs]
+home = ["HTML", "RSS"]
+
+[params]
+author = "Nikita Kibitkin"
+description = "Technical writing on backend engineering, SQL execution models, data systems, and production architecture."
+images = ["/images/posts/carbon-grid-light-shared-cover.png"]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+    unsafe = true
+  [markup.highlight]
+  codeFences = true
+  guessSyntax = true
+  lineNos = false
+  noClasses = false
+  style = "github"
+  tabWidth = 2

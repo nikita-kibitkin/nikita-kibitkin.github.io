@@ -1,0 +1,33 @@
+<script>
+  (function () {
+    var root = document.documentElement;
+    var saved = localStorage.getItem("cg-theme");
+    if (saved === "dark" || saved === "light") {
+      root.dataset.theme = saved;
+    } else {
+      root.dataset.theme = "light";
+    }
+    document.addEventListener("click", function (event) {
+      var toggle = event.target.closest("[data-theme-toggle]");
+      if (toggle) {
+        var next = root.dataset.theme === "dark" ? "light" : "dark";
+        root.dataset.theme = next;
+        localStorage.setItem("cg-theme", next);
+        return;
+      }
+      var copy = event.target.closest("[data-copy-url]");
+      if (copy) {
+        event.preventDefault();
+        var url = copy.getAttribute("data-copy-url") || window.location.href;
+        navigator.clipboard.writeText(url).then(function () {
+          var label = copy.querySelector("span");
+          if (!label) return;
+          var prev = label.textContent;
+          label.textContent = "Copied";
+          copy.classList.add("is-copied");
+          setTimeout(function () { label.textContent = prev; copy.classList.remove("is-copied"); }, 1600);
+        });
+      }
+    });
+  })();
+</script>

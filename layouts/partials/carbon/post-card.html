@@ -1,0 +1,18 @@
+{{- $post := .post -}}
+{{- $icon := $post.Params.icon | default "/images/icons/squares-accent.svg" -}}
+<a class="cg-card" href="{{ $post.RelPermalink }}">
+  <div class="cg-card-top">
+    <span class="cg-card-icon" aria-hidden="true">
+      <img src="{{ $icon | relURL }}" alt="">
+    </span>
+    <time class="cg-card-date" datetime="{{ $post.Date.Format "2006-01-02" }}">{{ $post.Date.Format "Jan 2" }}</time>
+  </div>
+  <h3 class="cg-card-title">{{ $post.Title }}</h3>
+  <p class="cg-card-excerpt">{{ $post.Summary | plainify }}</p>
+  <div class="cg-card-footer">
+    <span class="cg-card-avatar" aria-hidden="true">
+      <img src="{{ "/images/author.jpeg" | relURL }}" alt="">
+    </span>
+    <span class="cg-card-author">{{ site.Params.author }}</span>
+  </div>
+</a>

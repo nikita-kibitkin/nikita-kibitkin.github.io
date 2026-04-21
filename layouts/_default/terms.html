@@ -1,0 +1,35 @@
+{{ $terms := .Data.Terms.ByCount }}
+<!doctype html>
+<html lang="en">
+<head>
+  {{ partial "carbon/head.html" . }}
+</head>
+<body class="cg-body">
+  {{ partial "carbon/header.html" . }}
+  <main class="cg-main">
+    <div class="cg-shell">
+      <section class="cg-section">
+        <div class="cg-section-head">
+          <div>
+            <h2>Topics</h2>
+            <p class="cg-section-sub">Browse articles by topic.</p>
+          </div>
+          <span class="cg-section-link">{{ len $terms }} {{ if eq (len $terms) 1 }}topic{{ else }}topics{{ end }}</span>
+        </div>
+        <ul class="cg-topic-list">
+          {{ range $terms }}
+          <li>
+            <a href="{{ .Page.RelPermalink }}">
+              <span class="cg-topic-name">{{ .Page.Title }}</span>
+              <span class="cg-topic-count">{{ .Count }} {{ if eq .Count 1 }}post{{ else }}posts{{ end }}</span>
+            </a>
+          </li>
+          {{ end }}
+        </ul>
+      </section>
+    </div>
+  </main>
+  {{ partial "carbon/footer.html" . }}
+  {{ partial "carbon/scripts.html" . }}
+</body>
+</html>

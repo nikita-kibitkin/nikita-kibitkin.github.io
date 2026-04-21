@@ -1,0 +1,53 @@
+{{ $hasToc := and .Params.showToc .TableOfContents }}
+<!doctype html>
+<html lang="en">
+<head>
+  {{ partial "carbon/head.html" . }}
+</head>
+<body class="cg-body">
+  {{ partial "carbon/header.html" . }}
+  <main class="cg-main">
+    <div class="cg-article-hero">
+      <p class="cg-article-eyebrow">{{ with index .Params.categories 0 }}{{ . }}{{ else }}Blog{{ end }}</p>
+      <h1 class="cg-article-title">{{ .Title }}</h1>
+      <div class="cg-article-author">
+        <span class="cg-author-name">{{ site.Params.author }}</span>
+        <span class="cg-author-role">Backend Engineer</span>
+      </div>
+    </div>
+
+    <div class="cg-article-meta-wrap">
+      <div class="cg-article-meta">
+        <div class="cg-article-meta-left">
+          <span class="cg-meta-read">{{ .ReadingTime }} min read</span>
+          <button class="cg-copy-url" type="button" data-copy-url="{{ .Permalink }}" aria-label="Copy article URL">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            <span>Copy URL</span>
+          </button>
+        </div>
+        <time class="cg-article-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+      </div>
+    </div>
+
+    <div class="cg-article-layout{{ if $hasToc }} has-toc{{ end }}">
+      <article class="cg-article-body">
+        {{ .Content }}
+        {{ with .Params.tags }}
+        <div class="cg-article-tags">
+          {{ range . }}<a href="{{ "/tags/" | relURL }}{{ . | urlize }}/">#{{ . }}</a>{{ end }}
+        </div>
+        {{ end }}
+      </article>
+
+      {{ if $hasToc }}
+      <aside class="cg-article-toc">
+        <p class="cg-toc-title">Contents</p>
+        <nav>{{ .TableOfContents }}</nav>
+      </aside>
+      {{ end }}
+    </div>
+  </main>
+  {{ partial "carbon/footer.html" . }}
+  {{ partial "carbon/scripts.html" . }}
+</body>
+</html>

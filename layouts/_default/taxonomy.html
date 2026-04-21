@@ -1,0 +1,30 @@
+{{ $posts := .Pages.ByDate.Reverse }}
+<!doctype html>
+<html lang="en">
+<head>
+  {{ partial "carbon/head.html" . }}
+</head>
+<body class="cg-body">
+  {{ partial "carbon/header.html" . }}
+  <main class="cg-main">
+    <div class="cg-shell">
+      <section class="cg-section">
+        <div class="cg-section-head">
+          <div>
+            <h2>{{ .Title }}</h2>
+            <p class="cg-section-sub">Articles tagged <strong>{{ .Title }}</strong>.</p>
+          </div>
+          <span class="cg-section-link">{{ len $posts }} {{ if eq (len $posts) 1 }}post{{ else }}posts{{ end }}</span>
+        </div>
+        <div class="cg-card-grid">
+          {{ range $posts }}
+            {{ partial "carbon/post-card.html" (dict "post" .) }}
+          {{ end }}
+        </div>
+      </section>
+    </div>
+  </main>
+  {{ partial "carbon/footer.html" . }}
+  {{ partial "carbon/scripts.html" . }}
+</body>
+</html>
