@@ -1,7 +1,7 @@
 ---
 title: "The OLTP to OLAP Mindset Trap: Why Your PostgreSQL SQL Will Kill ClickHouse"
 date: 2026-04-17T00:00:00+02:00
-draft: false
+draft: true
 description: "Why PostgreSQL mental models break on ClickHouse, how CTE isolation around JOINs blocks global pushdown, and why explicit scan narrowing changes the cost profile by orders of magnitude."
 tags:
   - clickhouse
